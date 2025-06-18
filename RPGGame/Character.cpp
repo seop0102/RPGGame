@@ -24,8 +24,8 @@ Character* Character::getInstance(std::string name)
 	{
 		if (name.empty())
 		{
-			std::cout << "경고 : 캐릭터 이름이 비어있습니다. 기본 이름으로 설정합니다." << std::endl;
-			instance = new Character("플레이어");
+			std::cout << "경고 : 캐릭터 이름이 비어있습니다. 기본 이름으로 설정합니다. \n";
+			instance = new Charater("플레이어");
 		}
 		else {
 			instance = new Character(name);
@@ -36,13 +36,13 @@ Character* Character::getInstance(std::string name)
 
 void Character::displayStat()
 {
-	std::cout << "-----" << name << "의 상태 창---- - " << name << std::endl;
-	std::cout << "이름: " << name << std::endl;
-	std::cout << "레벨: " << level << std::endl;
-	std::cout << "체력: " << health << "/" << maxHealth << std::endl;
-	std::cout << "공격력: " << attack << std::endl;
-	std::cout << "경험치: " << exp << std::endl;
-	std::cout << "골드: " << gold << std::endl;
+	cout << "----- 상태 창 -----" << name << endl;
+	cout << "이름: " << name << endl;
+	cout << "레벨: " << level << endl;
+	cout << "체력: " << health << "/" << maxHealth << endl;
+	cout << "공격력: " << attack << endl;
+	cout << "경험치: " << exp << endl;
+	cout << "골드: " << gold << endl;
 }
 
 void Character::levelUp()
@@ -51,13 +51,13 @@ void Character::levelUp()
 	const int EXP_TO_NEXT_LEVEL = level * 100;
 
 	if (level >= 10) {
-		std::cout << "최대 레벨에 도달했습니다!" << std::endl;
+		cout << "최대 레벨에 도달했습니다!" << endl;
 		return;
 	}
 
 	if (exp >= EXP_TO_NEXT_LEVEL) {
 		level++;
-		exp -= EXP_TO_NEXT_LEVEL;
+		exp -= EXE_TO_NEXT_LEVEL;
 
 		maxHealth += 20; // 최대 체력 증가
 		health = maxHealth; // 체력 회복
