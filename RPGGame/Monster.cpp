@@ -4,15 +4,10 @@
 
 // 받는 데미지
 // 30%확률로 아이템 드랍 추가 해야 함
-// 몬스터가 쓰러지면 골드 드랍 골드 캐릭터 연동 추가 해야 함
 void Monster::takeDamage(int damage) {
     health -= damage;
-    std::cout << name << "이(가) " << damage << "의 데미지를 받았습니다!\n";
     if (health <= 0) {
         health = 0;
-        std::cout << name << "이(가) 쓰러졌습니다!\n";
-        int gold = getGold();
-        std::cout << "획득 골드 : " << gold << "\n";
     }
 }
 
