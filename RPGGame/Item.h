@@ -28,13 +28,14 @@ private:
 	int attackBonus;  // 공격력( 무기나 attack boost)
 	int defenseBonus;  //방어력
 	int skillCharges;   // 스킬 사용 횟수
+	int maxhealthBonus; // 최대 체력 증가
 	bool isEquipped;   // 장비장착여부
 
 public:
 	//생성자
-	Item(const std::string& name, ItemType type, ItemTier tier, 
+	Item(const std::string& name, ItemType type, ItemTier tier,
 		int healthRecover = 0, int skillCharges = 0, int attackBonus = 0,
-		int defenseBonus = 0, int price=0);
+		int defenseBonus = 0, int maxhealthBonus = 0, int price = 0);
 	
 	//getter 함수
 	std::string getName()const;
@@ -46,6 +47,7 @@ public:
 	int getAttackBonus()const;
 	int getDefenseBonus()const;
 	int getSkillCharges()const;
+	int getMaxHealthBonus()const;
 	bool getIsEquipped()const;
 
 	//setter 함수

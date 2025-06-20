@@ -2,10 +2,10 @@
 // 생성자
 Item::Item(const std::string& name, ItemType type, ItemTier tier,
 	int healthRecover = 0, int skillCharges = 0, int attackBonus = 0,
-	int defenseBonus = 0,int price)
+	int defenseBonus = 0,int maxhealthBonus=0,int price)
 	:name(name), type(type), tier(tier), price(price),
 	healthRecover(healthRecover), skillCharges(skillCharges),
-	attackBonus(attackBonus), defenseBonus(defenseBonus), isEquipped(false){}
+	attackBonus(attackBonus), defenseBonus(defenseBonus), maxhealthBonus(maxhealthBonus), isEquipped(false) {}
 // getter 함수
 std::string Item::getName()const
 {
@@ -44,6 +44,11 @@ int Item::getDefenseBonus() const
 int Item::getSkillCharges() const 
 {
 	return skillCharges;
+}
+
+int Item::getMaxHealthBonus()const
+{
+	return maxhealthBonus;
 }
 
 bool Item::getIsEquipped() const 
@@ -104,6 +109,7 @@ std::string Item::getIteminfo() const
 	{
 		if (attackBonus > 0)info += "공격력 +" + std::to_string(attackBonus) + " ";
 		if (defenseBonus > 0)info += "방어력 +" + std::to_string(defenseBonus) + " ";
+		if (maxhealthBonus > 0)info += "최대 체력 +" + std::to_string(maxhealthBonus) + " ";
 	}
 
 	info += "- " + std::to_string(price) + " gold";
