@@ -25,6 +25,7 @@ public:
 	void displayStat();
 	void levelUp();
 	void useItem(int itemIndex);
+	void takeDamage(int damage);
 
 	std::string getName() const { return name; }
 	int getLevel() const { return level; }

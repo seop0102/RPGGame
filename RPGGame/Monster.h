@@ -11,9 +11,9 @@ protected:
 public:
     virtual ~Monster() = default;
 
-    virtual std::string getName() const = 0;
-    virtual int getHealth() const = 0;
-    virtual int getAttack() const = 0;
+    virtual std::string getName() const { return name; }
+    virtual int getHealth() const { return health; }
+    virtual int getAttack() const { return attack; }
     virtual void takeDamage(int damage);
 
     virtual void status() const;
