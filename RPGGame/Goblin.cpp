@@ -1,7 +1,8 @@
 #include "Goblin.h"
 #include "Monster.h"
 
-Goblin::Goblin(int level) {
+Goblin::Goblin(int level) 
+{
     name = "Goblin";
     health = 40 + (level * 10);
     attack = 17 + (level * 3);

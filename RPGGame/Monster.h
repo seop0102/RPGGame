@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
 
-class Monster {
+class Monster 
+{
 protected:
     std::string name;
     int health;

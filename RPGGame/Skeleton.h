@@ -1,10 +1,10 @@
 #pragma once
 #include "Monster.h"
 
-class Goblin : public Monster 
+class Skeleton : public Monster
 {
 public:
-    Goblin(int level);
+    Skeleton(int level);
 
     std::string getName() const override;
     int getHealth() const override;
