@@ -44,33 +44,33 @@ Item* Monster::dropItem() const
             int randWeapon = rand() % 2;
             if (randWeapon == 0)
             {
-                item = new Item("√∂∞À", ItemType::WEAPON, ItemTier::NORAML, 0, 0, 3, 0, 100);
+                item = new Item("√∂∞À", ItemType::WEAPON, ItemTier::NORAML, 0, 0, 3, 0, 0, 100);
             }
             else
             {
-                item = new Item("¡ˆ∆Œ¿Ã", ItemType::WEAPON, ItemTier::RARE, 0, 0, 4, 0, 100);
+                item = new Item("¡ˆ∆Œ¿Ã", ItemType::WEAPON, ItemTier::RARE, 0, 0, 4, 0, 0, 100);
             }
             return item;
         case 1:
             int randArmor = rand() % 2;
             if (randArmor == 0)
             {
-                item = new Item("πÊ∆–", ItemType::ARMOR, ItemTier::RARE, 0, 0, 0, 5, 100);
+                item = new Item("πÊ∆–", ItemType::ARMOR, ItemTier::RARE, 0, 0, 0, 5, 0, 100);
             }
             else
             {
-                item = new Item("∞©ø ", ItemType::ARMOR, ItemTier::EPIC, 0, 0, 0, 10, 100);
+                item = new Item("∞©ø ", ItemType::ARMOR, ItemTier::EPIC, 0, 0, 0, 10, 3, 100);
             }
             return item;
         case 2:
             int randEdible = rand() % 2;
             if (randEdible == 0)
             {
-                item = new Item("»∏∫π π∞æ‡", ItemType::EDIBLE, ItemTier::NORAML, 50, 2, 0, 0, 100);
+                item = new Item("»∏∫π π∞æ‡", ItemType::EDIBLE, ItemTier::NORAML, 50, 2, 0, 0, 0, 100);
             }
             else
             {
-                item = new Item("»∏∫π π∞æ‡", ItemType::EDIBLE, ItemTier::RARE, 100, 4, 0, 0, 100);
+                item = new Item("»∏∫π π∞æ‡", ItemType::EDIBLE, ItemTier::RARE, 100, 4, 0, 0, 0, 100);
             }
             return item;
         }
