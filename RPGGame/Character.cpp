@@ -71,6 +71,15 @@ void Character::levelUp()
 	}
 }
 
+void Character::takeDamage(int damage)
+{
+	health -= damage;
+	if (health <= 0)
+	{
+		health = 0;
+	}
+}
+
 void Character::useItem(int itemIndex)
 {
 

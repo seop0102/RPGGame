@@ -12,6 +12,12 @@ void GameManager::startGame()
 
 }
 
+void GameManager::playGame()
+{
+	battleManager->doBattle();
+	shopManager->openShop();
+}
+
 void GameManager::endGame()
 {
 }

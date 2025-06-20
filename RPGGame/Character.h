@@ -30,6 +30,7 @@ public:
 	void displayStat();
 	void levelUp();
 	void useItem(int itemIndex);
+	void takeDamage(int damage);
 
 	// 게터 함수
 	std::string getName() const { return name; }

@@ -25,6 +25,8 @@ public:
 
 	void startGame();
 
+	void playGame();
+
 	void endGame();
 
 
