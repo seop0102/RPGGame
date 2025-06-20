@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Item.h"
 
 class Monster 
 {
@@ -19,4 +20,5 @@ public:
     virtual void status() const;
 
     virtual int getGold() const;
+    Item* dropItem() const;
 };
