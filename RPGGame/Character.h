@@ -4,14 +4,17 @@
 #include<vector>
 #include<iostream>
 
-using namespace std;
-
 class Item;
 
 class Character {
-
 private:
-	string name;
+
+	static Character* instance;
+	Character(std::string name);
+	Character(const Character&) = delete;
+	Character& operator=(const Character&) = delete;
+
+	std::string name;
 	int level;
 	int health;
 	int maxHealth;
@@ -19,13 +22,32 @@ private:
 	int exp;
 	int gold;
 
-	vector<Item> inventory;
+	std::vector<Item> inventory;
 
 public:
-	Character(string name);
+	static Character* getInstance(std::string name = "");
 
 	void displayStat();
 	void levelUp();
 	void useItem(int itemIndex);
 
+	// 게터 함수
+	std::string getName() const { return name; }
+	int getLevel() const { return level; }
+	int getHealth() const { return health; }
+	int getMaxHealth() const { return maxHealth; }
+	int getAttack() const { return attack; }
+	int getExp() const { return exp; }
+	int getGold() const { return gold; }
+
+	// 세터 함수
+	void setHealth(int newHealth) { health = newHealth; }
+	void addExp(int amount) { exp += amount; }
+	void addGold(int amount) { gold += amount; }
+	void removeGold(int amount) { gold -= amount; }
+
+	~Character();
+
+	// void addItem(const Item& item);
+	// void removeItem(int index);
 };
