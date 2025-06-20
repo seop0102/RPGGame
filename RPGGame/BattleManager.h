@@ -10,6 +10,6 @@ public:
 	BattleManager() = default;
 	~BattleManager() = default;
 
-	void doBattle(Character* player, Monster* monster);
+	bool doBattle(Character* player); //전투를 클리어 하면 true 아니면 false 반환
 
 };
