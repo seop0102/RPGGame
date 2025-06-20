@@ -147,6 +147,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="HealthPotion.h" />
+    <ClInclude Include="IClass.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Orc.h" />

@@ -1,11 +1,7 @@
 #include "Character.h"
-#include <iostream>
-#include <string>
-#include <vector>
-// #include "Item.h" // 추후 Item 클래스 정의 시 주석 해제 
+#include "Item.h" 
 
 
-Character* Character::instance = nullptr;
 
 Character::Character(std::string name)
 {
@@ -18,25 +14,11 @@ Character::Character(std::string name)
 	gold = 0;
 }
 
-Character* Character::getInstance(std::string name)
-{
-	if (instance == nullptr)
-	{
-		if (name.empty())
-		{
-			std::cout << "경고 : 캐릭터 이름이 비어있습니다. 기본 이름으로 설정합니다." << std::endl;
-			instance = new Character("플레이어");
-		}
-		else {
-			instance = new Character(name);
-		}
-	}
-	return instance;
-}
+
 
 void Character::displayStat()
 {
-	std::cout << "-----" << name << "의 상태 창---- - " << name << std::endl;
+	std::cout << "-----" << name << "의 상태 창---- - " << std::endl;
 	std::cout << "이름: " << name << std::endl;
 	std::cout << "레벨: " << level << std::endl;
 	std::cout << "체력: " << health << "/" << maxHealth << std::endl;

@@ -5,14 +5,14 @@
 #include<iostream>
 
 class Item;
+class Iclass;
 
 class Character {
 private:
 
-	static Character* instance;
-	Character(std::string name);
+	
 	Character(const Character&) = delete;
-	Character& operator=(const Character&) = delete;
+	
 
 	std::string name;
 	int level;
@@ -25,7 +25,7 @@ private:
 	std::vector<Item> inventory;
 
 public:
-	static Character* getInstance(std::string name = "");
+	
 
 	void displayStat();
 	void levelUp();
