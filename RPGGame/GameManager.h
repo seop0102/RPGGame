@@ -3,6 +3,7 @@
 #include "BattleManager.h"
 #include "ShopManager.h"
 #include "Character.h"
+#include "Monster.h"
 
 using namespace std;
 
@@ -25,7 +26,9 @@ public:
 
 	void startGame();
 
+	void playGame();
+
 	void endGame();
 
-
+	Monster createMonster(const string& monsterName, int health, int attack) {
 };
