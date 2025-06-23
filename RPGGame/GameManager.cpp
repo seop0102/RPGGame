@@ -1,41 +1,1 @@
-#include "GameManager.h"
-
-GameManager::GameManager() {
-
-	battleManager = new BattleManager();
-	shopManager = new ShopManager();
-
-}
-
-void GameManager::startGame()
-{
-	cout << "플레이어의 이름을 입력 하세요" << endl;
-
-	string playerName;
-	cin >> playerName;
-
-	player = Character::getInstance(playerName);
-}
-
-void GameManager::playGame()
-{
-	if (battleManager->doBattle(player)) 
-	{
-		cout << "전투를 클리어 했습니다!" << endl;
-		player->displayStat();
-
-		shopManager->openShop();
-
-	}
-	else
-	{
-		cout << "전투에 실패했습니다. 게임을 종료합니다." << endl;
-		endGame();
-		return;
-	}
-	
-}
-
-void GameManager::endGame()
-{
-}
+#include "GameManager.h"  GameManager::GameManager() {     battleManager = new BattleManager();     shopManager = new ShopManager();  }  void GameManager::startGame()  {     string job = storyManager->getJob();     if (job == "검사") {        player = new Character(storyManager->getName(), std::make_unique<Warrior>());   }     else if (job == "궁수") {  	player = new Character(storyManager->getName(), std::make_unique<Archer>());   }     else if (job == "도적") {  	player = new Character(storyManager->getName(), std::make_unique<Rogue>());   }     else {         // 예외 처리     }  }  void GameManager::playGame()  {     if (battleManager->doBattle(player))      {         cout << "전투를 클리어 했습니다!" << endl;         player->displayStat();         shopManager->openShop();     }     else     {         cout << "전투에 실패했습니다. 게임을 종료합니다." << endl;         endGame();         return;     }  }  void GameManager::endGame()  {  }

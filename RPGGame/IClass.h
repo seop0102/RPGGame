@@ -49,27 +49,3 @@ public:
 	
 	virtual ~IClass() = default;
 };
-
-class Warrior : public IClass {
-public:
-	std::string getClassName() const override { return "워리어"; }
-	std::vector<SkillType> getActiveSkills() const override;
-	void useSkill(SkillType skillType, Character& self, Monster& target);
-	void applyPassiveSkill(Character& self) override;	
-};
-
-class Archer : public IClass {
-public:
-	std::string getClassName() const override { return "궁수"; }
-	std::vector<SkillType> getActiveSkills() const override;
-	void useSkill(SkillType skillType, Character& self, Monster& target) override;
-	void applyPassiveSkill(Character& self) override;
-};
-
-class Rogue : public IClass {
-public:
-	std::string getClassName() const override { return "도적"; }
-	std::vector<SkillType> getActiveSkills() const override;
-	void useSkill(SkillType skillType, Character& self, Monster& target) override;
-	void applyPassiveSkill(Character& self) override;
-};

@@ -4,7 +4,12 @@
 #include "ShopManager.h"
 #include "StoryManager.h"
 #include "Character.h"
+#include "IClass.h"
+#include "Rogue.h"
+#include "Archer.h"
+#include "Warrior.h"
 #include "Monster.h"
+#include <memory>
 
 using namespace std;
 
@@ -33,5 +38,4 @@ public:
 
 	void endGame();
 
-	Monster createMonster(const string& monsterName, int health, int attack) {
 };

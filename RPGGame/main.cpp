@@ -10,5 +10,6 @@ int main() {
 	gameManager.playGame();
 
 	gameManager.endGame();
+
 	return 0;
 }

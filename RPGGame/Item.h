@@ -14,6 +14,7 @@ enum class ItemTier // 아이템 등급
 	RARE,  // 중급
 	EPIC   // 고급
 };
+
 class Item
 {
 protected: // private>protected 로 해서 상속가능하게끔
@@ -35,7 +36,7 @@ public:
 	//생성자
 	Item(const std::string& name, ItemType type, ItemTier tier,
 		int healthRecover = 0, int skillCharges = 0, int attackBonus = 0,
-		int defenseBonus, int maxHealthBonus = 0, int price = 0);
+		int defenseBonus = 0, int maxHealthBonus = 0, int price = 0);
 
 	// 가상 소멸자
 	virtual~Item() = default;
@@ -68,6 +69,7 @@ public:
 	std::string getTierString()const;
 	std::string getIteminfo()const; // 상점에서 보여줄 아이템 정보
 };
+
 //구체적인 아이템 클래스
 // 소모품
 class EdibleItem : public Item

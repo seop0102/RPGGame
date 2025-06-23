@@ -1,4 +1,5 @@
 #include "StoryManager.h"
+#include "StoryManager.h"
 #include <iostream>
 
 StoryManager::StoryManager() : username(""),totalScore(0), job(""), map("") {
@@ -83,4 +84,9 @@ std::string StoryManager::getJob() const {
 }
 std::string StoryManager::getMap() const {
 	return map;
+}
+
+std::string StoryManager::getName() const
+{
+	return username;
 }

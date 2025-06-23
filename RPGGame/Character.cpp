@@ -133,6 +133,36 @@ void Character::removeItem(int index)
     }
 }
 
+vector<SkillType> Character::getActiveSkills() {
+	if (characterClass) return characterClass->getActiveSkills();
+	return {};
+}
+
+void Character::useSkill(SkillType skillType, Character& self, Monster& target) {
+	if (characterClass) {
+		// 스킬 사용 횟수 체크, 감소
+		if (skillUsages.count(skillType) && skillUsages[skillType] > 0) {
+			characterClass->useSkill(skillType, self, target); // 스킬 효과 위임
+			// 특수 스킬 횟수 차감용
+			if (skillType == SkillType::ROGUE4 || skillType == SkillType::WARRIOR4 || skillType == SkillType::ARCHER4) {
+				skillUsages[skillType]--;
+			}
+		}
+		else {
+			std::cout << "스킬 '" << getSkillName(skillType) << "'의 사용 횟수가 부족합니다." << std::endl;
+		}
+	}
+}
+
+void Character::applyPassiveSkill(Character & self) {
+	if (characterClass) characterClass->applyPassiveSkill(self);
+}
+
+string Character::getClassName() {
+	if (characterClass) return characterClass->getClassName();
+	return "알수 없음";
+}
+
 // 스킬 사용 횟수 초기화 함수
 void Character::initializeSkillUsages() {
     // 모든 스킬 타입을 가져와서 초기 사용 횟수를 설정합니다.

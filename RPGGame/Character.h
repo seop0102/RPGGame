@@ -37,14 +37,6 @@ private:
 	// 스킬 사용 횟수
 	std::map<SkillType, int> skillUsages;
 
-	// 스킬 효과
-	bool hasSurvivedThisTurn; // 워리어, 버티기 (턴당 1회)
-	bool isShielded; // 워리어, 방패 (턴당 1회)
-	bool isHiding; // 도적, 숨기 (1회성)
-	bool isAimed; // 궁수, 조준 (다음 공격 명중률 증가)
-	int wraithArrowDamage; // 궁수, 망령 화살 (다음 턴 공격 피해량 증가)
-	bool hasIndomitableWill; // 워리어 패시브 
-
 public:
 	Character(std::string name, std::unique_ptr<IClass> selectedClass);
 
@@ -52,37 +44,17 @@ public:
 	void takeDamage(int damage) override;
 	int getAttack() const override { return attack; }
 	int getHealth() const override { return health; }
-	std::string getName() const override { return name; }
-	bool isAlive() const override { return health > 0; }
-	int getDefense() const override { return defense; }
-	int getDodgeChance() const override { return dodgeChance; }
+	string getName() const override { return name; }
 
-	std::vector<SkillType> getActiveSkills() const {
-		if (characterClass) return characterClass->getActiveSkills();
-		return {};
-	}
-	void useSkill(SkillType skillType, Character& self, Monster& target) {
-		if (characterClass) {
-			// 스킬 사용 횟수 체크, 감소
-			if (skillUsages.count(skillType) && skillUsages[skillType] > 0) {
-				characterClass->useSkill(skillType, self, target); // 스킬 효과 위임
-				// 특수 스킬 횟수 차감용
-				if (skillType == SkillType::ROGUE4 || skillType == SkillType::WARRIOR4 || skillType == SkillType::ARCHER4) {
-					skillUsages[skillType]--;
-				}
-			}
-			else {
-				std::cout << "스킬 '" << getSkillName(skillType) << "'의 사용 횟수가 부족합니다." << std::endl;
-			}
-		}
-	}
-	void applyPassiveSkill(Character& self)  {
-		if (characterClass) characterClass->applyPassiveSkill(self);
-	}
-	std::string getClassName() const  {
-		if (characterClass) return characterClass->getClassName();
-		return "알수 없음";
-	}
+	vector<SkillType> getActiveSkills();
+	
+	void useSkill(SkillType skillType, Character& self, Monster& target);
+
+	void applyPassiveSkill(Character& self);
+
+	string getClassName();
+
+	bool isAlive() const { return health > 0;} // 살았는지 죽었는지 확인
 
 	// 캐릭터 기능
 	void displayStat();
@@ -103,20 +75,16 @@ public:
 	std::string getSkillName(SkillType skillType) const; // 스킬 타입-> 이름 변환
 		 
 	// 게터 함수
-	std::string getName() const { return name; }
 	int getLevel() const { return level; }
-	int getHealth() const { return health; }
 	int getMaxHealth() const { return maxHealth; }
-	int getAttack() const { return attack; }
 	int getExp() const { return exp; }
 	int getGold() const { return gold; }
-	int getDefense() const override { return defense; }
-	int getDodgeChance() const override { return dodgeChance; }
 	int getHitChance() const { return hitChance; }
-	bool isAlive() const override { return health > 0; }
+	int getDefense() const { return defense; } // 방어력 반환
+	int getDodgeChance() const { return dodgeChance; } // 회피율 반환
 	//
 	// 스킬 효과 게터/세터
-	void setHasSurvivedThisTurn(bool val) { hasSurvivedThisTurn = val; }
+	/*void setHasSurvivedThisTurn(bool val) { hasSurvivedThisTurn = val; }
 	bool getHasSurvivedThisTurn() const { return hasSurvivedThisTurn; }
 	void setIsShielded(bool val) { isShielded = val; }
 	bool getIsShielded() const { return isShielded; }
@@ -127,7 +95,7 @@ public:
 	void setWraithArrowDamage(int val) { wraithArrowDamage = val; }
 	int getWraithArrowDamage() const { return wraithArrowDamage; }
 	void setHasIndomitableWill(bool val) { hasIndomitableWill = val; }
-	bool getHasIndomitableWill() const { return hasIndomitableWill; }
+	bool getHasIndomitableWill() const { return hasIndomitableWill; }*/
 
 	// 세터 함수
 	void setHealth(int newHealth) { health = newHealth; }
