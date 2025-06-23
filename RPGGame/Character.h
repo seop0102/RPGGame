@@ -119,7 +119,7 @@ public:
 	int getDodgeChance() const override { return dodgeChance; }
 	int getHitChance() const { return hitChance; }
 	bool isAlive() const override { return health > 0; }
-
+	//
 	// 스킬 효과 게터/세터
 	void setHasSurvivedThisTurn(bool val) { hasSurvivedThisTurn = val; }
 	bool getHasSurvivedThisTurn() const { return hasSurvivedThisTurn; }
