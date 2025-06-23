@@ -9,9 +9,9 @@
 #include "ICombatant.h"
 #include "Item.h"
 
-class Item;
-class Monster;
+using namespace std;
 
+class Monster;
 
 class Character : public ICombatant {
 private:
@@ -31,13 +31,8 @@ private:
 
 	std::vector<Item> inventory;
 
-
-public:
-	Character(std::string name);
-
 	// 직업 객체 
 	std::unique_ptr<IClass> characterClass;
-
 
 	// 스킬 사용 횟수
 	std::map<SkillType, int> skillUsages;
@@ -113,7 +108,7 @@ public:
 	int getHealth() const { return health; }
 	int getMaxHealth() const { return maxHealth; }
 	int getAttack() const { return attack; }
-	int getExp() const { retrun exp; }
+	int getExp() const { return exp; }
 	int getGold() const { return gold; }
 	int getDefense() const override { return defense; }
 	int getDodgeChance() const override { return dodgeChance; }
@@ -133,14 +128,6 @@ public:
 	int getWraithArrowDamage() const { return wraithArrowDamage; }
 	void setHasIndomitableWill(bool val) { hasIndomitableWill = val; }
 	bool getHasIndomitableWill() const { return hasIndomitableWill; }
-
-
-	void setHealth(int newHealth) { exp += amount; }
-	void addExp(int amount) { gold += amount; }
-	void removeGold(int amount) { gold -= amount; }
-
-	// void addItem(const Item& item);
-	// void removeItem(int index);
 
 	// 세터 함수
 	void setHealth(int newHealth) { health = newHealth; }

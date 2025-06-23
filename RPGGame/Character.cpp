@@ -30,47 +30,12 @@ Character::Character(std::string name, std::unique_ptr<IClass> selectedClass)
 	wraithArrowDamage(0), // int로 초기화
 	hasIndomitableWill(false)
 {
-<<<<<<< HEAD
-	this->name = name;
-	level = 1;
-	health = 200;
-	maxHealth = 200;
-	attack = 30;
-	exp = 0; 
-	gold = 0;
-}
-
-Character* Character::getInstance(std::string name)
-{
-	if (instance == nullptr)
-	{
-		if (name.empty())
-		{
-			std::cout << "경고 : 캐릭터 이름이 비어있습니다. 기본 이름으로 설정합니다. \n";
-			instance = new Charater("플레이어");
-		}
-		else {
-			instance = new Character(name);
-		}
-	}
-	return instance;
-=======
 	// 초기 스킬 사용 횟수 설정
 	initializeSkillUsages();
->>>>>>> origin/BYUN-HYUK
 }
 
 void Character::displayStat()
 {
-<<<<<<< HEAD
-	cout << "----- 상태 창 -----" << name << endl;
-	cout << "이름: " << name << endl;
-	cout << "레벨: " << level << endl;
-	cout << "체력: " << health << "/" << maxHealth << endl;
-	cout << "공격력: " << attack << endl;
-	cout << "경험치: " << exp << endl;
-	cout << "골드: " << gold << endl;
-=======
 	std::cout << "--------상태 창--------" << std::endl;
 	std::cout << "이름: " << name << std::endl;
 	std::cout << "레벨: " << level << std::endl;
@@ -79,7 +44,6 @@ void Character::displayStat()
 	std::cout << "경험치: " << exp << std::endl;
 	std::cout << "골드: " << gold << std::endl;
 	std::cout << "----------------------" << std::endl;
->>>>>>> origin/BYUN-HYUK
 }
 
 void Character::levelUp()
@@ -87,19 +51,14 @@ void Character::levelUp()
 	const int MAX_LEVEL = 10;
 	const int EXP_TO_NEXT_LEVEL = level * 100;
 
-<<<<<<< HEAD
-	if (level >= 10) {
-		cout << "최대 레벨에 도달했습니다!" << endl;
-=======
 	if (level >= MAX_LEVEL) {
 		std::cout << "10레벨에 도달했습니다!" << std::endl;
->>>>>>> origin/BYUN-HYUK
 		return;
 	}
 
 	if (exp >= EXP_TO_NEXT_LEVEL) {
 		level++;
-		exp -= EXE_TO_NEXT_LEVEL;
+		exp -= EXP_TO_NEXT_LEVEL;
 
 		maxHealth += 20; // 최대 체력 증가
 		health = maxHealth; // 체력 회복
