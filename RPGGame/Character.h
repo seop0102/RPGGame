@@ -29,7 +29,10 @@ private:
 	int exp;
 	int gold;
 
-	std::vector<Item> inventory;
+	WeaponItem* equippedWeapon; // 장착된 무기
+	ArmorItem* equippedArmor; // 장착된 방어구
+
+	std::vector<Item*> inventory;
 
 	// 직업 객체 
 	std::unique_ptr<IClass> characterClass;
@@ -40,11 +43,15 @@ private:
 public:
 	Character(std::string name, std::unique_ptr<IClass> selectedClass);
 
+	unique_ptr<IClass> getcharacterClass() const { return characterClass.get(); } // 직업 객체 반환
+
 // ICombatant 인터페이스
 	void takeDamage(int damage) override;
 	int getAttack() const override { return attack; }
 	int getHealth() const override { return health; }
 	string getName() const override { return name; }
+	int getDefense() const { return defense; } // 방어력 반환
+	int getDodgeChance() const { return dodgeChance; } // 회피율 반환
 
 	vector<SkillType> getActiveSkills();
 	
@@ -65,8 +72,14 @@ public:
 	void addGold(int amount);
 	void addExp(int amount);
 	void removeGold(int amount);
-	void addItem(const Item& item);
+
+	// 인벤토리 관련
+	void equipWeapon(WeaponItem* weapon);
+	void equipArmor(ArmorItem* armor);
+	void useItem(int itemIndex); // 아이템 사용
+	void addItem(Item* item);
 	void removeItem(int index);
+	void showInventory() const; // 인벤토리 출력
 
 	// 스킬 사용 횟수
 	void initializeSkillUsages();
@@ -80,8 +93,7 @@ public:
 	int getExp() const { return exp; }
 	int getGold() const { return gold; }
 	int getHitChance() const { return hitChance; }
-	int getDefense() const { return defense; } // 방어력 반환
-	int getDodgeChance() const { return dodgeChance; } // 회피율 반환
+	
 	//
 	// 스킬 효과 게터/세터
 	/*void setHasSurvivedThisTurn(bool val) { hasSurvivedThisTurn = val; }

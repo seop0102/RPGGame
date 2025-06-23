@@ -12,6 +12,11 @@ namespace {
     void performRogue4(Character& self, Monster& target); // 숨기
 }
 
+Rogue::Rogue()
+	: isHiding(false) // 초기화
+{
+}
+
 std::vector<SkillType> Rogue::getActiveSkills() const {
     return { SkillType::ROGUE1, SkillType::ROGUE2, SkillType::ROGUE3, SkillType::ROGUE4 };
 }

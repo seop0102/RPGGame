@@ -13,6 +13,11 @@ namespace {
 	void performWarrior4(Character& self, Monster& target); // 버티기
 }
 
+Warrior::Warrior()
+	: isShielded(false), hasSurvivedThisTurn(false), hasIndomitableWill(false) // 초기화
+{
+}
+
 std::vector<SkillType> Warrior::getActiveSkills() const {
 	return { SkillType::WARRIOR1, SkillType::WARRIOR2, SkillType::WARRIOR3, SkillType::WARRIOR4 };
 }

@@ -22,16 +22,9 @@ Character::Character(std::string name, std::unique_ptr<IClass> selectedClass)
 	dodgeChance(5), // 기본 회피율 설정 (필요시)
 	exp(0),
 	gold(0),
-	characterClass(std::move(selectedClass)), // Unique_ptr 초기화
-	hasSurvivedThisTurn(false),
-	isShielded(false),
-	isHiding(false),
-	isAimed(false),
-	wraithArrowDamage(0), // int로 초기화
-	hasIndomitableWill(false)
+	equippedWeapon(nullptr), equippedArmor(nullptr)
 {
-	// 초기 스킬 사용 횟수 설정
-	initializeSkillUsages();
+	characterClass = move(selectedClass);
 }
 
 void Character::displayStat()
@@ -81,11 +74,6 @@ void Character::takeDamage(int damage)
 	}
 }
 
-void Character::useItem(int itemIndex)
-{
-
-}
-
 // 골드 추가 함수
 void Character::addGold(int amount)
 {
@@ -115,23 +103,93 @@ void Character::removeGold(int amount)
 }
 
 // 아이템 추가 함수
-void Character::addItem(const Item& item)
+void Character::addItem(Item* item)
 {
+	if (inventory.size() >= 10) { // 인벤토리 최대 10개 아이템
+		showInventory();
+		std::cout << "인벤토리가 가득 찼습니다. 다른 아이템을 버리시겠습니까?" << std::endl;
+		
+		//선택지 추가 예정
+		int index = 0;
+		item; // 아이템 정보 출력
+		swap(item, inventory[index]); // 마지막 아이템과 교체
+
+		delete item;
+	
+	}
+
     inventory.push_back(item);
-    std::cout << item.getName() << "을(를) 인벤토리에 추가했습니다." << std::endl;
+    std::cout << item->getName() << "을(를) 인벤토리에 추가했습니다." << std::endl;
 }
 
 // 아이템 제거 함수
 void Character::removeItem(int index)
 {
     if (index >= 0 && index < inventory.size()) {
-        std::cout << inventory[index].getName() << "을(를) 인벤토리에서 제거했습니다." << std::endl;
+        std::cout << inventory[index]->getName() << "을(를) 인벤토리에서 제거했습니다." << std::endl;
         inventory.erase(inventory.begin() + index);
     }
     else {
         std::cout << "잘못된 아이템 인덱스입니다." << std::endl;
     }
 }
+
+void Character::showInventory() const
+{
+	for (Item* i : inventory)
+	{
+		//아이템 정보 출력
+	}
+
+}
+
+void Character::equipWeapon(WeaponItem* weapon) {
+	if (equippedWeapon != nullptr)
+	{
+		swap(equippedWeapon, weapon); // 기존 무기와 교체
+	}
+	else
+	{
+		equippedWeapon = weapon; // 무기 장착
+	}
+}
+
+void Character::equipArmor(ArmorItem* armor)
+{
+	if (equippedWeapon != nullptr)
+	{
+		swap(equippedArmor, armor); // 기존 방어구와 교체
+	}
+	else
+	{
+		equippedArmor = armor; // 방어구 장착
+	}
+}
+
+void Character::useItem(int itemindex) {
+    if (inventory.empty() || itemindex < 0 || itemindex >= inventory.size())
+    {
+	    std::cout << "잘못된 아이템 인덱스입니다." << std::endl;
+	    return;
+    }
+
+    EdibleItem* edible = dynamic_cast<EdibleItem*>(inventory[itemindex]);
+
+    if (edible)
+    {
+	    edible->use(); // 아이템 사용
+    }
+    else
+    {
+	    std::cout << "사용할 수 없는 아이템입니다." << std::endl;
+	    return;
+
+    }
+
+    removeItem(itemindex); // 아이템 사용 후 인벤토리에서 제거
+}
+
+
 
 vector<SkillType> Character::getActiveSkills() {
 	if (characterClass) return characterClass->getActiveSkills();

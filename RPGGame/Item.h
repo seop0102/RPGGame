@@ -95,6 +95,7 @@ public:
 	std::string getEffect()const override;
 	bool canUse() const override;
 };
+
 // 아이템-방어구
 class ArmorItem :public Item
 {

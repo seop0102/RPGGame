@@ -5,6 +5,8 @@
 
 // 받는 데미지
 // 30%확률로 아이템 드랍 추가 해야 함
+
+
 void Monster::takeDamage(int damage) 
 {
     health -= damage;
@@ -12,6 +14,16 @@ void Monster::takeDamage(int damage)
     {
         health = 0;
     }
+}
+
+void Monster::setHealth(int health)
+{
+	this->health = health;
+}
+
+void Monster::setAttack(int attack)
+{
+	this->attack = attack;
 }
 
 //몬스터 스텟

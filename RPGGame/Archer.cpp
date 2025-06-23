@@ -13,6 +13,12 @@ namespace {
 	void performArcher4(Character& self, Monster& target); // 망령 화살
 }
 
+Archer::Archer()
+	: isAimed(false), wraithArrowDamage(0) // 초기화
+{
+}
+
+
 std::vector<SkillType> Archer::getActiveSkills() const {
 	return { SkillType::ARCHER1, SkillType::ARCHER2, SkillType::ARCHER3, SkillType::ARCHER4 };
 }
@@ -40,7 +46,7 @@ namespace {
         int damage = self.getAttack();
 
         // '조준' 상태라면 추가 피해 및 필중 효과
-        if (self.getIsAimed()) {
+        if (self.characterClass) {
             std::cout << "조준 효과로 화살이 반드시 명중하며 추가 피해를 입힙니다!" << std::endl;
             damage = static_cast<int>(damage * 1.3); // 데미지 30% 증가
             self.setIsAimed(false); // 조준 효과 사용 후 초기화

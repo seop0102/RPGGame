@@ -11,4 +11,6 @@ public:
 	std::vector<SkillType> getActiveSkills() const override;
 	void useSkill(SkillType skillType, Character& self, Monster& target) override;
 	void applyPassiveSkill(Character& self) override;
+
+	void setIsHiding(bool hiding) { isHiding = hiding; } // 숨기 상태 설정
 };

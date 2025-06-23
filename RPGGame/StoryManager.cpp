@@ -1,6 +1,5 @@
 #include "StoryManager.h"
 #include "StoryManager.h"
-#include <iostream>
 
 StoryManager::StoryManager() : username(""),totalScore(0), job(""), map("") {
 } //초기화 시켜주기

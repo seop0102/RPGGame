@@ -5,7 +5,7 @@ int main() {
 
 	gameManager.storyManager->startPrologue(); // 프롤로그 시작
 
-	//gameManager.startGame();
+	gameManager.startGame();
 
 	gameManager.playGame();
 
