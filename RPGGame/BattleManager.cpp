@@ -21,6 +21,12 @@ bool BattleManager::doBattle(Character* player)
 			std::cout << "몬스터를 처치했습니다!" << std::endl;
 
 			player->addGold(monster->getGold()); // 몬스터 처치 시 골드 추가
+			
+			if (monster->dropItem() != nullptr) {
+				std::cout << "아이템을 획득했습니다: " << monster->dropItem()->getName() << std::endl;
+				player->lootitem(monster->dropItem()); // 플레이어에게 아이템 추가
+			}
+
 			player->addExp(50); // 몬스터 처치 시 경험치 추가
 			player->levelUp(); // 경험치에 따라 레벨업
 			
