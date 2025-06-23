@@ -2,6 +2,7 @@
 
 #include "BattleManager.h"
 #include "ShopManager.h"
+#include "StoryManager.h"
 #include "Character.h"
 #include "Monster.h"
 
@@ -9,14 +10,16 @@ using namespace std;
 
 class BattleManager;
 class ShopManager;
+class StoryManager;
 class Character;
 
 class GameManager {
 
-private:
+public:
 
 	BattleManager* battleManager;
 	ShopManager* shopManager;
+	StoryManager* storyManager;
 
 	Character* player;
 

@@ -9,12 +9,9 @@
 #include "ICombatant.h"
 #include "Item.h"
 
-<<<<<<< HEAD
-
 class Item;
-=======
 class Monster;
->>>>>>> origin/BYUN-HYUK
+
 
 class Character : public ICombatant {
 private:
@@ -34,13 +31,13 @@ private:
 
 	std::vector<Item> inventory;
 
-<<<<<<< HEAD
+
 public:
 	Character(std::string name);
-=======
+
 	// 직업 객체 
 	std::unique_ptr<IClass> characterClass;
->>>>>>> origin/BYUN-HYUK
+
 
 	// 스킬 사용 횟수
 	std::map<SkillType, int> skillUsages;
@@ -97,8 +94,6 @@ public:
 	void levelUp();
 	void useItem(int itemIndex);
 
-<<<<<<< HEAD
-=======
 	// 골드 / 경험치 / 아이템 관리 
 	void addGold(int amount);
 	void addExp(int amount);
@@ -113,7 +108,6 @@ public:
 	std::string getSkillName(SkillType skillType) const; // 스킬 타입-> 이름 변환
 		 
 	// 게터 함수
->>>>>>> origin/BYUN-HYUK
 	std::string getName() const { return name; }
 	int getLevel() const { return level; }
 	int getHealth() const { return health; }
@@ -140,14 +134,14 @@ public:
 	void setHasIndomitableWill(bool val) { hasIndomitableWill = val; }
 	bool getHasIndomitableWill() const { return hasIndomitableWill; }
 
-<<<<<<< HEAD
+
 	void setHealth(int newHealth) { exp += amount; }
 	void addExp(int amount) { gold += amount; }
 	void removeGold(int amount) { gold -= amount; }
 
 	// void addItem(const Item& item);
 	// void removeItem(int index);
-=======
+
 	// 세터 함수
 	void setHealth(int newHealth) { health = newHealth; }
 	void setMaxHealth(int newMaxHealth) { maxHealth = newMaxHealth; }
@@ -158,5 +152,4 @@ public:
 	void setDodgeChance(int chance) { dodgeChance = chance; }
 	void setGold(int newGold) { gold = newGold; } // 도적 스킬 등에서 필요
 
->>>>>>> origin/BYUN-HYUK
 };
