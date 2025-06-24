@@ -4,7 +4,6 @@
 #include<vector>
 #include<iostream>
 #include<map> // 연관 컨테이너 Key, Value 
-#include<memory> // unique_ptr 
 
 #include "IClass.h"
 #include "ICombatant.h"
