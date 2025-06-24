@@ -59,12 +59,9 @@ void StoryManager::askUsername() {
 	}
 }
 void StoryManager::makeJobMap() {
-	std::vector<std::string> maps;
-	/*원래 map = '안개의 숲'으로 처리했는데 그러면 안개의 숲의 stage 2,3,4,5 ... 처리 힘들어서
-	벡터로 바꿨음. 나중에 벡터 인덱스가 1이면 안개의 숲 벡터로 스테이지 처리하면 됨*/
 	if (totalScore <= 8) {
 		job = "도적";
-		maps = { "안개의 숲", "안개의 숲 초입", "짙은 안개의 숲", "괴물들의 숲 " , "폐허가 된 마을", "수상한 제단", "종말의 전당" };
+		map = { "안개의 숲", "안개의 숲 초입", "짙은 안개의 숲", "괴물들의 숲 " , "폐허가 된 마을", "수상한 제단", "종말의 전당" };
 	}
 	else if (totalScore <= 11) {
 		job = "궁수";

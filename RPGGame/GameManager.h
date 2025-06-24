@@ -21,15 +21,15 @@ class GameManager {
 
 public:
 
-	BattleManager* battleManager;
-	ShopManager* shopManager;
-	StoryManager* storyManager;
+	BattleManager* battleManager = nullptr;
+	ShopManager* shopManager = nullptr;
+	StoryManager* storyManager = nullptr;
 
-	Character* player;
+	Character* player = nullptr;
 
 public:
 	GameManager();
-	~GameManager() = default;
+	~GameManager();
 
 	void startGame();
 
