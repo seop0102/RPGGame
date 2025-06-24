@@ -2,8 +2,7 @@
 #include "StoryManager.h"
 #include <iostream>
 #include <vector>
-StoryManager::StoryManager() : username(""), totalScore(0), job(""), map(std::vector<std::string>()) {
-} //초기화 시켜주기
+StoryManager::StoryManager() {} //초기화 시켜주기
 //나중에 startPrologue만 호출하면 됨
 void StoryManager::startPrologue() { //전체 프롤로그 실행
 	showStory(); //이야기 보여줌

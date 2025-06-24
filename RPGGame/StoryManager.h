@@ -13,10 +13,10 @@ public:
 	std::string getName() const; //유저 이름 반환
 
 private:
-	int totalScore; //유저가 고른 정답의 점수 합 담을 변수
-	std::string job;
+	int totalScore = 0; //유저가 고른 정답의 점수 합 담을 변수
+	std::string job = "";
 	std::vector<std::string> map;
-	std::string username;
+	std::string username = "";
 	void showStory(); //흐름 관리
 	void playPrologue();//이야기 시작
 	void makeJobMap(); // 직업 맵 결정 + 출력
