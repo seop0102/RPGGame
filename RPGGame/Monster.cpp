@@ -43,52 +43,58 @@ int Monster::getGold() const
 
 Item* Monster::dropItem() const
 {
-    srand(time(0));
-    int chance = rand() % 100;
-    Item* item = nullptr;
+        srand(time(0));
+        int chance = rand() % 100;
+        Item* item = nullptr;
 
-    if (chance < 30)
-    {
-        int randItem = rand() % 3; // 0: 무기, 1: 방어구, 2: 소모품
-        switch (randItem)
+        if (chance < 30)
         {
-        case 0:
-            int randWeapon = rand() % 2;
-            if (randWeapon == 0)
-            {
-                item = new WeaponItem("철검", ItemTier::NORAML, 3, 100);
-            }
-            else
-            {
-                item = new WeaponItem("지팡이", ItemTier::RARE, 4, 100);
-            }
-            return item;
-        case 1:
-            int randArmor = rand() % 2;
-            if (randArmor == 0)
-            {
-                item = new ArmorItem("방패", ItemTier::RARE, 5, 0, 100);
-            }
-            else
-            {
-                item = new ArmorItem("갑옷", ItemTier::EPIC, 10, 3, 100);
-            }
-            return item;
-        case 2:
-            int randEdible = rand() % 2;
-            if (randEdible == 0)
-            {
-                item = new EdibleItem("회복 물약", ItemTier::NORAML, 50, 2, 0, 100);
-            }
-            else
-            {
-                item = new EdibleItem("회복 물약", ItemTier::RARE, 100, 4, 0, 100);
-            }
-            return item;
+                int randItem = rand() % 3; // 0: 무기, 1: 방어구, 2: 소모품
+                switch (randItem)
+                {
+                case 0:
+                {
+                        int randWeapon = rand() % 2;
+                        if (randWeapon == 0)
+                        {
+                                item = new WeaponItem("철검", ItemTier::NORAML, 3, 100);
+                        }
+                        else
+                        {
+                                item = new WeaponItem("지팡이", ItemTier::RARE, 4, 100);
+                        }
+                        return item;
+                }
+                case 1:
+                {
+                        int randArmor = rand() % 2;
+                        if (randArmor == 0)
+                        {
+                                item = new ArmorItem("방패", ItemTier::RARE, 5, 0, 100);
+                        }
+                        else
+                        {
+                                item = new ArmorItem("갑옷", ItemTier::EPIC, 10, 3, 100);
+                        }
+                        return item;
+                }
+                case 2:
+                {
+                        int randEdible = rand() % 2;
+                        if (randEdible == 0)
+                        {
+                                item = new EdibleItem("회복 물약", ItemTier::NORAML, 50, 2, 0, 100);
+                        }
+                        else
+                        {
+                                item = new EdibleItem("회복 물약", ItemTier::RARE, 100, 4, 0, 100);
+                        }
+                        return item;
+                }
+                }
         }
-    }
-    else
-    {
-        return item;
-    }
+        else
+        {
+                return item;
+        }
 }

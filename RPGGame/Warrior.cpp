@@ -6,64 +6,62 @@
 
 #include <iostream>
 
-namespace {
-	void performWarrior1(Character& self, Monster& target); // 베기
-	void performWarrior2(Character& self, Monster& target); // 방패
-	void performWarrior3(Character& self, Monster& target); // 강타
-	void performWarrior4(Character& self, Monster& target); // 버티기
+Warrior::Warrior() {
+        // activeSkills 벡터에 직접 스킬 이름을 문자열로 추가
+        activeSkills.push_back("기본 공격");
+        activeSkills.push_back("베기");
+        activeSkills.push_back("방패");
+        activeSkills.push_back("강타");
+        activeSkills.push_back("버티기");
 }
 
-Warrior::Warrior()
-	: isShielded(false), hasSurvivedThisTurn(false), hasIndomitableWill(false) // 초기화
-{
+std::string Warrior::getClassName() const {
+        return "전사";
 }
 
-std::vector<SkillType> Warrior::getActiveSkills() const {
-	return { SkillType::WARRIOR1, SkillType::WARRIOR2, SkillType::WARRIOR3, SkillType::WARRIOR4 };
+// std::vector<std::string>을 반환하도록 변경
+std::vector<std::string> Warrior::getActiveSkills() const {
+        return activeSkills;
+}
+
+// 매개변수를 const std::string&으로 변경하고 내부 로직도 문자열 비교로 변경
+void Warrior::useSkill(const std::string& skillName, Character& self, Monster& target) {
+        if (skillName == "기본 공격") {
+                std::cout << self.getName() << "이(가) " << target.getName() << "에게 기본 공격을 시전합니다!" << std::endl;
+                int damage = self.getAttack();
+                target.takeDamage(damage);
+        }
+        else if (skillName == "베기") {
+                std::cout << self.getName() << "이(가) " << target.getName() << "에게 베기를 시전합니다!" << std::endl;
+                int damage = self.getAttack() * 1.2; // 예시로 공격력의 120%
+                target.takeDamage(damage);
+        }
+        else if (skillName == "방패") {
+                std::cout << self.getName() << "이(가) 방패를 들어 방어 태세를 취합니다!" << std::endl;
+                self.setIsShielded(true); // Character 클래스에 isShielded 상태 추가 및 세터 필요
+                self.setDefense(self.getDefense() + 10); // 임시로 방어력 증가 예시
+        }
+        else if (skillName == "강타") {
+                std::cout << self.getName() << "이(가) " << target.getName() << "에게 강타를 시전합니다!" << std::endl;
+                int damage = self.getAttack() * 1.5; // 강한 공격
+                if (Utils::checkChance(self.getCriticalChance())) { // Utils::checkChance는 예시 함수
+                        damage *= 2; // 치명타
+                        std::cout << "치명타 발동!" << std::endl;
+                }
+                target.takeDamage(damage);
+        }
+        else if (skillName == "버티기") {
+                // Character.cpp의 useSkill에서 횟수 차감이 이미 처리됨
+                std::cout << self.getName() << "이(가) 인내심으로 버티기를 사용합니다! 다음 턴에 죽지 않습니다." << std::endl;
+                self.setHasIndomitableWill(true); // Character에 hasIndomitableWill 상태 추가 및 세터 필요
+        }
+        else {
+                std::cout << "알 수 없는 전사 스킬입니다: " << skillName << std::endl;
+        }
 }
 
 void Warrior::applyPassiveSkill(Character& self) {
-	self.setHasIndomitableWill(true);
-	std::cout << "패시브 발동! " << self.getName() << "은(는) 강인한 생명력으로 공격을 버텨냈다! " << std::endl;
-}
-
-void Warrior::useSkill(SkillType skillType, Character& self, Monster& target) {
-	switch (skillType) {
-	case SkillType::WARRIOR1:performWarrior1(self, target); break; // 베기
-	case SkillType::WARRIOR2:performWarrior2(self, target); break; // 방패
-	case SkillType::WARRIOR3:performWarrior3(self, target); break; // 강타
-	case SkillType::WARRIOR4:performWarrior4(self, target); break; // 버티기
-	default:
-		std::cout << "지정되지 않은 스킬입니다." << std::endl;
-		break;
-	}
-}
-
-namespace {
-	void performWarrior1(Character& self, Monster& target) {
-		std::cout << self.getName() << "의 베기!" << std::endl;
-		int baseSkillDamage = 10 + (self.getLevel() * 2);
-		int finalDamage = self.getAttack() + baseSkillDamage;
-		std::cout << target.getName() << "에게 " << finalDamage << "의 피해를 입혔습니다." << std::endl;
-		target.takeDamage(finalDamage);
-	}
-
-	void performWarrior2(Character& self, Monster& target) {
-		std::cout << self.getName() << "의 방패!" << std::endl;
-		self.setIsShielded(true);
-		std::cout << "다음 공격의 받는 피해가 50% 감소합니다." << std::endl;
-	}
-
-	void performWarrior3(Character& self, Monster& target) {
-		std::cout << self.getName() << "의 강타!" << std::endl;
-		int damage = static_cast<int>(self.getAttack() * 1.5);
-		std::cout << target.getName() << "에게 " << damage << "의 피해를 입혔습니다." << std::endl;
-		target.takeDamage(damage);
-	}
-	void performWarrior4(Character& self, Monster& target) {
-		std::cout << self.getName() << "의 버티기!" << std::endl;
-		// 이 턴에 치명적인 피해를 받아도 한 번 생존 (takeDamage 함수에서 확인 필요)
-		self.setHasSurvivedThisTurn(true);
-		std::cout << "이번 턴에 어떤 공격을 받아도 쓰러지지 않습니다." << std::endl;
-	}
+        std::cout << "전사의 패시브 스킬 '강인함'이 적용됩니다. 최대 체력 +50." << std::endl;
+        self.setMaxHealth(self.getMaxHealth() + 50);
+        self.setHealth(self.getMaxHealth()); // 체력도 최대치로 회복
 }

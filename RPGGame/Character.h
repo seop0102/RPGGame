@@ -36,15 +36,26 @@ private:
 	std::vector<Item*> inventory;
 
 	// 직업 객체 
-	std::unique_ptr<IClass> characterClass;
+	//std::unique_ptr<IClass> characterClass;
+	IClass* characterClass;
 
 	// 스킬 사용 횟수
 	std::map<std::string, int> skillUsages;
 
-public:
-	Character(std::string name, std::unique_ptr<IClass> selectedClass);
+	//스킬관련 변수
+	bool isAimed; // 궁수, 조준 (다음 공격 명중률 증가)
+	int wraithArrowDamage; // 궁수, 망령 화살 (다음 턴 공격 피해량 증가)
 
-	unique_ptr<IClass> getcharacterClass() const { return characterClass.get(); } // 직업 객체 반환
+	bool isHiding; // 도적, 숨기 (1회성)
+
+	bool isShielded; // 워리어, 방패 (턴당 1회)
+	bool hasSurvivedThisTurn; // 워리어, 버티기 (턴당 1회)
+	bool hasIndomitableWill; // 워리어 패시브 
+
+
+
+public:
+	Character(std::string name, IClass* selectedClass);
 
 // ICombatant 인터페이스
 	void takeDamage(int damage) override;
@@ -54,20 +65,16 @@ public:
 	int getDefense() const { return defense; } // 방어력 반환
 	int getDodgeChance() const { return dodgeChance; } // 회피율 반환
 
-	vector<SkillType> getActiveSkills();
-	
-	void useSkill(SkillType skillType, Character& self, Monster& target);
-
+	std::vector<std::string> getActiveSkills() const;
+	void useSkill(const std::string& skillName, Character& self, Monster& target);
 	void applyPassiveSkill(Character& self);
-
-	string getClassName();
+	std::string getClassName() const;
 
 	bool isAlive() const { return health > 0;} // 살았는지 죽었는지 확인
 
 	// 캐릭터 기능
 	void displayStat();
 	void levelUp();
-	void useItem(int itemIndex);
 
 	// 골드 / 경험치 / 아이템 관리 
 	void addGold(int amount);
@@ -84,31 +91,33 @@ public:
 
 	// 스킬 사용 횟수
 	void initializeSkillUsages();
-	void restoreSkillUsage(SkillType skillType, int amount);
-	int getRemainingSkillUsage(SkillType skillType) const;
-	std::string getSkillName(SkillType skillType) const; // 스킬 타입-> 이름 변환
-		 
+	void restoreSkillUsage(const std::string& skillName, int amount);
+	int getRemainingSkillUsage(const std::string& skillName) const;
+	std::string getSkillName(const std::string& skillName) const; // 스킬 타입-> 이름 변환
+
+	bool getIsAimed() const { return isAimed; } // 조준 상태 반환;
+	void setIsAimed(bool aimed) { isAimed = aimed; } // 조준 상태 설정
+	void setWraithArrowDamage(int val) { wraithArrowDamage = val; }
+	int getWraithArrowDamage() const { return wraithArrowDamage; }
+
+	void setIsHiding(bool val) { isHiding = val; }
+	bool getIsHiding() const { return isHiding; } // 숨기 상태 설정
+
+	void setHasSurvivedThisTurn(bool val) { hasSurvivedThisTurn = val; }
+	bool getHasSurvivedThisTurn() const { return hasSurvivedThisTurn; }
+	void setIsShielded(bool val) { isShielded = val; }
+	bool getIsShielded() const { return isShielded; }
+	void setHasIndomitableWill(bool val) { hasIndomitableWill = val; }
+	bool getHasIndomitableWill() const { return hasIndomitableWill; }
+
+
 	// 게터 함수
 	int getLevel() const { return level; }
 	int getMaxHealth() const { return maxHealth; }
 	int getExp() const { return exp; }
 	int getGold() const { return gold; }
 	int getHitChance() const { return hitChance; }
-	
-	//
-	// 스킬 효과 게터/세터
-	/*void setHasSurvivedThisTurn(bool val) { hasSurvivedThisTurn = val; }
-	bool getHasSurvivedThisTurn() const { return hasSurvivedThisTurn; }
-	void setIsShielded(bool val) { isShielded = val; }
-	bool getIsShielded() const { return isShielded; }
-	void setIsHiding(bool val) { isHiding = val; }
-	bool getIsHiding() const { return isHiding; }
-	void setIsAimed(bool val) { isAimed = val; }
-	bool getIsAimed() const { return isAimed; }
-	void setWraithArrowDamage(int val) { wraithArrowDamage = val; }
-	int getWraithArrowDamage() const { return wraithArrowDamage; }
-	void setHasIndomitableWill(bool val) { hasIndomitableWill = val; }
-	bool getHasIndomitableWill() const { return hasIndomitableWill; }*/
+	int getCriticalChance() const { return criticalChance; }
 
 	// 세터 함수
 	void setHealth(int newHealth) { health = newHealth; }

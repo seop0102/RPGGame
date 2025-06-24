@@ -1,5 +1,4 @@
 #include "StoryManager.h"
-#include "StoryManager.h"
 
 StoryManager::StoryManager() : username(""),totalScore(0), job(""), map("") {
 } //초기화 시켜주기
@@ -26,7 +25,7 @@ void StoryManager::playPrologue() {
 	};
 	for (int i = 0; i < 5; ++i) {
 		//문제 출력
-		std::cout << "\n문제" << prologue[i] << endl;
+		std::cout << "\n문제" << prologue[i] << std::endl;
 		int userChoice = 0;
 		while (true) {
 			std::cin >> userChoice;
@@ -34,7 +33,7 @@ void StoryManager::playPrologue() {
 				break;
 			}
 			else {
-				std::cout << "1,2,3 중에서 다시 입력해주세요." << endl;
+				std::cout << "1,2,3 중에서 다시 입력해주세요." << std::endl;
 			}
 		}
 		totalScore += userChoice;
@@ -50,7 +49,7 @@ void StoryManager::askUsername() {
 		std::cin >> username;
 		if (username.find(' ') != std::string::npos) {
 			//공백이 포함되어 있다면?
-			std::cout << "공백 없이 입력해주세요.\n"
+			std::cout << "공백 없이 입력해주세요.\n";
 		}
 		else {
 			break;
@@ -73,9 +72,9 @@ void StoryManager::makeJobMap() {
 		job = "검사";
 		map = { "망자의 감옥" , "망자의 감옥 초입", "망자의 감옥", "불안정한 균열" , "저주받은 통로", "저주받은 무덤 입구", " 망자의 무덤"};
 	}
-	std::cout << username << "님 환영합니다." << endl;
-	std::cout << "당신의 직업 : " << job << endl;
-	std::cout << "던전 : " << map[0] << endl;
+	std::cout << username << "님 환영합니다." << std::endl;
+	std::cout << "당신의 직업 : " << job << std::endl;
+	std::cout << "던전 : " << map[0] << std::endl;
 }
 
 std::string StoryManager::getJob() const {

@@ -1,16 +1,22 @@
 #pragma once
 
+#include <string>
+#include <vector>
 #include "IClass.h"
 #include "Character.h"
 
-class Warrior : public IClass {
-public:
-	bool isShielded; // 워리어, 방패 (턴당 1회)
-	bool hasSurvivedThisTurn; // 워리어, 버티기 (턴당 1회)
-	bool hasIndomitableWill; // 워리어 패시브 
 
-	std::string getClassName() const override { return "워리어"; }
-	std::vector<SkillType> getActiveSkills() const override;
-	void useSkill(SkillType skillType, Character& self, Monster& target);
+class Warrior : public IClass { // IClass 상속
+public:
+	Warrior();
+	~Warrior() override = default;
+
+	std::string getClassName() const override; // SkillType 대신 std::string 반환하도록 변경
+	std::vector<std::string> getActiveSkills() const override; // SkillType 대신 const std::string& 매개변수 받도록 변경
+	void useSkill(const std::string& skillName, Character& self, Monster& target) override;
 	void applyPassiveSkill(Character& self) override;
+
+private:
+	// SkillType 대신 std::string을 저장하도록 변경
+	std::vector<std::string> activeSkills; // 스킬 이름 목록 (std::string)
 };

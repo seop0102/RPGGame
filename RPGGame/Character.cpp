@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <map>
 
-Character::Character(std::string name, std::unique_ptr<IClass> selectedClass)
+Character::Character(std::string name, IClass* selectedClass)
 	: name(name),
 	level(1),
 	health(200),
@@ -24,7 +24,7 @@ Character::Character(std::string name, std::unique_ptr<IClass> selectedClass)
 	gold(0),
 	equippedWeapon(nullptr), equippedArmor(nullptr)
 {
-	characterClass = move(selectedClass);
+	characterClass = selectedClass;
 }
 
 void Character::displayStat()
@@ -191,88 +191,101 @@ void Character::useItem(int itemindex) {
 
 
 
-vector<SkillType> Character::getActiveSkills() {
+std::vector<std::string> Character::getActiveSkills() const {
 	if (characterClass) return characterClass->getActiveSkills();
 	return {};
 }
 
-void Character::useSkill(SkillType skillType, Character& self, Monster& target) {
+void Character::useSkill(const std::string& skillName, Character& self, Monster& target) { // <-- std::string 받음 확인
 	if (characterClass) {
-		// 스킬 사용 횟수 체크, 감소
-		if (skillUsages.count(skillType) && skillUsages[skillType] > 0) {
-			characterClass->useSkill(skillType, self, target); // 스킬 효과 위임
-			// 특수 스킬 횟수 차감용
-			if (skillType == SkillType::ROGUE4 || skillType == SkillType::WARRIOR4 || skillType == SkillType::ARCHER4) {
-				skillUsages[skillType]--;
+		// 스킬 사용 횟수 확인 (예: 1회성 스킬)
+		// 맵의 키는 std::string이므로, skillName으로 직접 접근
+		if (skillUsages.count(skillName) && skillUsages[skillName] > 0) { // <-- std::string 키 접근 확인
+			characterClass->useSkill(skillName, self, target); // 실제 스킬 효과 실행
+
+			// 1회성 스킬은 사용 후 횟수 감소 (스킬 이름을 string으로 비교)
+			if (skillName == "숨기" || skillName == "버티기" || skillName == "망령 화살") {
+				skillUsages[skillName]--; // <-- std::string 키 접근 확인
+				std::cout << skillName << " 사용! 남은 횟수: " << skillUsages[skillName] << "회." << std::endl;
 			}
 		}
-		else {
-			std::cout << "스킬 '" << getSkillName(skillType) << "'의 사용 횟수가 부족합니다." << std::endl;
+		else if (skillUsages.count(skillName) && skillUsages[skillName] == 0) {
+			std::cout << "스킬 '" << skillName << "'의 사용 횟수를 모두 소진했습니다." << std::endl;
+		}
+		else { // 무제한 스킬 (기본 공격 등)
+			characterClass->useSkill(skillName, self, target);
 		}
 	}
 }
-
-void Character::applyPassiveSkill(Character & self) {
+void Character::applyPassiveSkill(Character& self) {
 	if (characterClass) characterClass->applyPassiveSkill(self);
 }
 
-string Character::getClassName() {
+std::string Character::getClassName() const {
 	if (characterClass) return characterClass->getClassName();
 	return "알수 없음";
 }
 
 // 스킬 사용 횟수 초기화 함수
 void Character::initializeSkillUsages() {
-    // 모든 스킬 타입을 가져와서 초기 사용 횟수를 설정합니다.
-    // 각 직업의 스킬 사용 횟수를 어떻게 정할지는 게임 디자인에 따라 다릅니다.
-    // 여기서는 일반 스킬은 99, 특정 스킬(숨기, 버티기, 망령 화살)은 1로 설정합니다.
-    for (int i = static_cast<int>(SkillType::ROGUE1); i <= static_cast<int>(SkillType::WARRIOR4); ++i) {
-        SkillType type = static_cast<SkillType>(i);
-        if (type == SkillType::ROGUE4 || type == SkillType::WARRIOR4 || type == SkillType::ARCHER4) {
-            skillUsages[type] = 1; // 특수 스킬 (숨기, 버티기, 망령 화살)은 1회 사용 가능
-        }
-        else {
-            skillUsages[type] = 99; // 일반 스킬은 무제한 (테스트 목적)
-        }
-    }
-    // BASIC_ATTACK은 스킬 사용 횟수 개념이 없으므로 제외
+	skillUsages.clear(); // 기존 데이터를 깔끔하게 초기화
+
+	// 스킬 이름과 초기 사용 횟수를 직접 문자열 키로 설정
+	// 각 직업의 스킬을 여기에 명시적으로 추가합니다.
+	// 기존 enum 값 대신 실제 스킬 이름을 사용합니다.
+
+	// 공통 스킬
+	skillUsages["기본 공격"] = 99; // 무제한
+
+	// 전사 스킬
+	skillUsages["베기"] = 99;
+	skillUsages["방패"] = 99;
+	skillUsages["강타"] = 99;
+	skillUsages["버티기"] = 1; // 1회 제한
+
+	// 궁수 스킬
+	skillUsages["화살 명중"] = 99;
+	skillUsages["조준"] = 99;
+	skillUsages["폭풍 화살"] = 99;
+	skillUsages["망령 화살"] = 1; // 1회 제한
+
+	// 도적 스킬
+	skillUsages["찢기"] = 99;
+	skillUsages["날렵한 손"] = 99;
+	skillUsages["급습"] = 99;
+	skillUsages["숨기"] = 1; // 1회 제한
+
+	// (필요하다면 여기에 더 많은 스킬과 사용 횟수를 추가)
 }
 
 // 스킬 사용 횟수 복원 함수
-void Character::restoreSkillUsage(SkillType skillType, int amount) {
-    if (skillUsages.count(skillType)) {
-        skillUsages[skillType] += amount;
-        std::cout << getSkillName(skillType) << " 스킬 사용 횟수가 " << amount << "만큼 회복되었습니다. 현재 " << skillUsages[skillType] << "회." << std::endl;
-    }
+void Character::restoreSkillUsage(const std::string& skillName, int amount) {
+	if (skillUsages.count(skillName)) { // skillUsages 맵에 skillName이 있는지 확인
+		if (skillUsages.at(skillName) != 99) { // 무제한 스킬이 아닌 경우에만 복원
+			skillUsages[skillName] += amount;
+			std::cout << skillName << " 스킬 사용 횟수가 " << amount << "만큼 회복되었습니다. 현재 " << skillUsages[skillName] << "회." << std::endl;
+		}
+		else {
+			std::cout << skillName << " 스킬은 무제한입니다." << std::endl;
+		}
+	}
+	else {
+		std::cout << "알 수 없는 스킬이거나 사용 횟수를 복원할 수 없는 스킬입니다." << std::endl;
+	}
 }
 
 // 남은 스킬 사용 횟수 반환 함수
-int Character::getRemainingSkillUsage(SkillType skillType) const {
-    if (skillUsages.count(skillType)) {
-        return skillUsages.at(skillType);
-    }
-    return 0; // 해당 스킬이 없으면 0 반환
+int Character::getRemainingSkillUsage(const std::string& skillName) const {
+	if (skillUsages.count(skillName)) { // skillUsages 맵에 skillName이 있는지 확인
+		return skillUsages.at(skillName); // 해당 스킬의 남은 횟수 반환
+	}
+	return 0; // 해당 스킬이 없으면 0 반환 (또는 오류 처리)
 }
 
 // 스킬 타입에 따른 이름 반환 함수
-std::string Character::getSkillName(SkillType skillType) const {
-    switch (skillType) {
-    case SkillType::BASIC_ATTACK: return "기본 공격";
-        // 도적 스킬
-    case SkillType::ROGUE1: return "찢기";
-    case SkillType::ROGUE2: return "날렵한 손";
-    case SkillType::ROGUE3: return "급습";
-    case SkillType::ROGUE4: return "숨기";
-        // 궁수 스킬
-    case SkillType::ARCHER1: return "화살 명중";
-    case SkillType::ARCHER2: return "조준";
-    case SkillType::ARCHER3: return "폭풍 화살";
-    case SkillType::ARCHER4: return "망령 화살";
-        // 워리어 스킬
-    case SkillType::WARRIOR1: return "베기";
-    case SkillType::WARRIOR2: return "방패";
-    case SkillType::WARRIOR3: return "강타";
-    case SkillType::WARRIOR4: return "버티기";
-    default: return "알 수 없는 스킬";
-    }
+std::string Character::getSkillName(const std::string& skillName) const {
+	// 스킬 이름이 이미 문자열이므로, 그대로 반환합니다.
+	// 기존의 switch 문은 SkillType enum을 string으로 변환하는 역할을 했지만,
+	// 이제 스킬 이름 자체가 string이므로 필요 없어집니다.
+	return skillName;
 }
