@@ -5,6 +5,7 @@
 #include<iostream>
 #include<map> // 연관 컨테이너 Key, Value 
 #include<memory> // unique_ptr 
+
 #include "IClass.h"
 #include "ICombatant.h"
 #include "Item.h"
@@ -38,7 +39,7 @@ private:
 	std::unique_ptr<IClass> characterClass;
 
 	// 스킬 사용 횟수
-	std::map<SkillType, int> skillUsages;
+	std::map<std::string, int> skillUsages;
 
 public:
 	Character(std::string name, std::unique_ptr<IClass> selectedClass);
